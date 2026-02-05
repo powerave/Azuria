@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "../Hero.hpp"
+#include "Entities/Enemy.hpp"
 
 class Game {
     private:
@@ -10,6 +11,7 @@ class Game {
         int _animFrame = 0;
 
         Hero* _Player;
+        std::vector<Enemy*> _enemies;
 
         // Graphismes du joueur
         sf::Texture _playerTexture;
@@ -21,6 +23,11 @@ class Game {
         void update(); //Maj de la logique (physique, stats)
         void render();
         bool handleMovements(bool isMoving);
+
+        void updateEnemies();
+        void handleCombat();
+        void removeDeadEnemies();
+        void spawnEnemies();
     
     public:
         Game();

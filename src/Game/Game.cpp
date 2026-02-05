@@ -40,9 +40,35 @@ bool Game::handleMovements(bool isMoving) {
     return isMoving;
 }
 
+void Game::spawnEnemies() {
+    /*TODO: remplir le vector _enemies et definir un lieu de spawn*/
+}
+
+void Game::updateEnemies() {
+    /*TODO: deplacements*/
+}
+
+void Game::handleCombat() {
+    /*TODO: Pour bow: creer projectile, si projectile touche on applique dmg*/
+}
+
+void Game::removeDeadEnemies() {
+    for (auto it = _enemies.begin(); it != _enemies.end();) {
+        if ((*it)->getHp() <= 0) {
+            delete *it;
+            it = _enemies.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
 void Game::update() {
     bool isMoving = false;
 
+    updateEnemies();
+    handleCombat();
+    removeDeadEnemies();
     isMoving = handleMovements(isMoving);
     if (isMoving) {
         if (_animClock.getElapsedTime().asSeconds() > 0.1f) {

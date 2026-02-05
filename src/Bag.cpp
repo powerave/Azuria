@@ -14,6 +14,23 @@ Bag::Bag(const Bag &other) {
         this->_all_gears.push_back(other._all_gears[i]->clone());
 }
 
+Bag& Bag::operator=(const Bag &other) {
+    if (this != &other) {
+        for (auto weapon : _all_weapons)
+            delete weapon;
+        for (auto gear : _all_gears)
+            delete  gear;
+        _all_gears.clear();
+        _all_weapons.clear();
+
+        for (size_t i = 0; i < other._all_weapons.size(); i++)
+            this->_all_weapons.push_back(other._all_weapons[i]->clone());
+        for (size_t i = 0; i < other._all_gears.size(); i++)
+            this->_all_gears.push_back(other._all_gears[i]->clone());
+    }
+    return *this;
+}
+
 const std::vector<Weapon*>& Bag::getAll_weapons() const {
     return _all_weapons;
 }
