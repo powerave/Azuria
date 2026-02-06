@@ -18,7 +18,7 @@ class Weapon  {
     
     public:
         virtual ~Weapon();
-    Weapon(const std::string &name, const std::string &type, int dmg, float range, int as, int hands);
+        Weapon(const std::string &name, const std::string &type, int dmg, float range, int as, int hands);
         std::string getName() const;
         std::string getType() const;
         int getDmg() const;

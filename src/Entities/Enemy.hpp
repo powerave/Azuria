@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
-#include <map>
+#include <SFML/Graphics.hpp>
 
 class Enemy {
-    private:
+    protected:
         const std::string _name;
         const std::string _primaryWeapon;
         int _dmg;
@@ -15,6 +15,8 @@ class Enemy {
         float _crit = 5.0f;
         int _lvl;
         int _exp;
+        sf::Texture _enemyTexture;
+        sf::Sprite _enemySprite;
     
     public:
         Enemy(std::string name, std::string primaryWeapon, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp);
@@ -38,4 +40,5 @@ class Enemy {
         void setCrit(const float crit);
 
         virtual Enemy* clone() const = 0;
+        virtual sf::Sprite &getSprite();
 };

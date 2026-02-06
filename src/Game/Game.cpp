@@ -40,12 +40,19 @@ bool Game::handleMovements(bool isMoving) {
     return isMoving;
 }
 
-void Game::spawnEnemies() {
-    /*TODO: remplir le vector _enemies et definir un lieu de spawn*/
+void Game::spawnEnemies(int x, int y) {
+    _enemies.push_back(new Goblin("Goblin", "Stick", 3, 1.0f, 2.0f, 12, 5, 2.0f, 5.0f, 1, 5, x, y));
+}
+
+void Game::randomSpawnEnemies() {
+    _enemies.push_back(new Goblin("Goblin", "Stick", 3, 1.0f, 2.0f, 12, 5, 2.0f, 5.0f, 1, 5, rand() % 2560, rand() % 1440));
 }
 
 void Game::updateEnemies() {
-    /*TODO: deplacements*/
+    for (Enemy* enemy : _enemies) {
+        if (Goblin* goblin = dynamic_cast<Goblin*>(enemy))
+            goblin->idleAnimation(); 
+    }
 }
 
 void Game::handleCombat() {
@@ -66,6 +73,8 @@ void Game::removeDeadEnemies() {
 void Game::update() {
     bool isMoving = false;
 
+    if (_enemies.empty())
+        randomSpawnEnemies();
     updateEnemies();
     handleCombat();
     removeDeadEnemies();
@@ -90,6 +99,8 @@ void Game::update() {
 void Game::render() {
     _window.clear(sf::Color::Black);
     _window.draw(_playerSprite);
+    for (Enemy* enemy : _enemies)
+        _window.draw(enemy->getSprite());
     _window.display();
 }
 
@@ -114,6 +125,9 @@ Game::Game() {
     _playerSprite.setPosition(400, 300); // Au milieu
     _rectPlayer = sf::IntRect(0, 320, 64, 64);
     _playerSprite.setTextureRect(_rectPlayer);
+    spawnEnemies(500, 300);
+    spawnEnemies(700, 400);
+    spawnEnemies(900, 500);
 }
 
 Game::~Game() {}

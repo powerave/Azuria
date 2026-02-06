@@ -47,6 +47,10 @@ int Enemy::getExp() const {
     return _exp;
 }
 
+sf::Sprite& Enemy::getSprite() {
+    return _enemySprite;
+}
+
 void Enemy::setHp(const int hp) {
     this->_hp = hp;
 }
