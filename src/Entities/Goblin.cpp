@@ -1,7 +1,9 @@
 #include "Goblin.hpp"
 
-Goblin::Goblin(std::string name, std::string primaryWeapon, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp, int x, int y) 
+Goblin::Goblin(std::string name, std::string primaryWeapon, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp, float x, float y) 
     : Enemy(name, primaryWeapon, dmg, as, range, hp, mana, ms, crit, lvl, exp) {
+        _x = x;
+        _y = y;
         if (!_enemyTexture.loadFromFile("src/Sprites/Monsters_Creatures_Fantasy/Goblin/Idle.png")) {
             std::cout << "Error: failed to load Goblin texture" << std::endl;
         } else {

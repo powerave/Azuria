@@ -56,17 +56,3 @@ void Bag::add_gear(Gear *new_gear) {
     std::cout << "Picked up " << new_gear->getName() << std::endl;
     _all_gears.push_back(new_gear);
 }
-
-void Bag::remove_weapon(Weapon *rm_weapon) {
-    std::vector<Weapon*>::iterator it = std::find(_all_weapons.begin(), _all_weapons.end(), rm_weapon);
-    if (it != _all_weapons.end())
-        _all_weapons.erase(it);
-    std::cout << "Dropped " << rm_weapon->getName() << std::endl;
-}
-
-void Bag::remove_gear(Gear *rm_gear) {
-    std::vector<Gear*>::iterator it = std::find(_all_gears.begin(), _all_gears.end(), rm_gear);
-    if (it != _all_gears.end())
-        _all_gears.erase(it);
-    std::cout << "Dropped " << rm_gear->getName() << std::endl;
-}

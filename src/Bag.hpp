@@ -26,6 +26,12 @@ class Bag {
 
         void add_weapon(Weapon *new_weapon);
         void add_gear(Gear *new_gear);
-        void remove_weapon(Weapon *rm_weapon);
-        void remove_gear(Gear *rm_gear);
+		template<typename T>
+		void remove_item(std::vector<T*> &items, T* item) {
+			auto it = std::find(items.begin(), items.end(), item);
+			if (it != items.end()) {
+				std::cout << "Dropped " << item->getName() << std::endl;
+				items.erase(it);
+			}
+		}
 };

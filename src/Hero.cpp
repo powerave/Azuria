@@ -119,31 +119,31 @@ void Hero::equipGear(Gear* newGear) {
 
     this->_equiped[type] = newGear;
     std::cout << "Equiped " << newGear->getName() << std::endl;
-    _bag.remove_gear(newGear);
+    _bag.remove_item(_bag.getAll_gears(), newGear);
 }
 
 void Hero::equipLeftHand(Weapon *newWeapon) {
     if (!_leftHand) {
         this->_W_equiped["left"] = newWeapon;
         _leftHand = true;
-        _bag.remove_weapon(newWeapon);
+        _bag.remove_item(_bag.getAll_weapons(), newWeapon);
         return;
     }
     this->_bag.add_weapon(_W_equiped["left"]);
     this->_W_equiped["left"] = newWeapon;
-    _bag.remove_weapon(newWeapon);
+    _bag.remove_item(_bag.getAll_weapons(), newWeapon);
 }
 
 void Hero::equipRightHand(Weapon *newWeapon) {
     if (!_rightHand) {
         this->_W_equiped["right"] = newWeapon;
         _rightHand = true;
-        _bag.remove_weapon(newWeapon);
+        _bag.remove_item(_bag.getAll_weapons(), newWeapon);
         return;
     }
     this->_bag.add_weapon(_W_equiped["right"]);
     this->_W_equiped["right"] = newWeapon;
-    _bag.remove_weapon(newWeapon);
+    _bag.remove_item(_bag.getAll_weapons(), newWeapon);
 }
 
 void Hero::equipTwoHands(Weapon *newWeapon) {
@@ -179,7 +179,7 @@ void Hero::equipTwoHands(Weapon *newWeapon) {
             this->_W_equiped["right"] = newWeapon;
         }
     }
-    _bag.remove_weapon(newWeapon);
+    _bag.remove_item(_bag.getAll_weapons(), newWeapon);
 }
 
 void Hero::unequipLeftHand() {

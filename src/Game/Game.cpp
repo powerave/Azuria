@@ -40,18 +40,26 @@ bool Game::handleMovements(bool isMoving) {
     return isMoving;
 }
 
-void Game::spawnEnemies(int x, int y) {
+void Game::spawnEnemies(float x, float y) {
     _enemies.push_back(new Goblin("Goblin", "Stick", 3, 1.0f, 2.0f, 12, 5, 2.0f, 5.0f, 1, 5, x, y));
+	_enemies.push_back(new Skeleton("Skeleton", "Bone Club", 5, 1.5f, 2.5f, 20, 10, 1.5f, 10.0f, 2, 10, x + 100.0f, y + 100.0f));
+	_enemies.push_back(new Eye("Eye", "Bite", 4, 1.2f, 3.0f, 15, 20, 2.5f, 7.5f, 1, 8, x - 100.0f, y - 100.0f));
 }
 
 void Game::randomSpawnEnemies() {
-    _enemies.push_back(new Goblin("Goblin", "Stick", 3, 1.0f, 2.0f, 12, 5, 2.0f, 5.0f, 1, 5, rand() % 2560, rand() % 1440));
+    float randomX = static_cast<float>(rand() % 2560);
+    float randomY = static_cast<float>(rand() % 1440);
+    _enemies.push_back(new Goblin("Goblin", "Stick", 3, 1.0f, 2.0f, 12, 5, 2.0f, 5.0f, 1, 5, randomX, randomY));
 }
 
 void Game::updateEnemies() {
     for (Enemy* enemy : _enemies) {
-        if (Goblin* goblin = dynamic_cast<Goblin*>(enemy))
-            goblin->idleAnimation(); 
+        if (Goblin *goblin = dynamic_cast<Goblin*>(enemy))
+            goblin->idleAnimation();
+		if (Skeleton *skeleton = dynamic_cast<Skeleton*>(enemy))
+			skeleton->idleAnimation();
+		if (Eye *eye = dynamic_cast<Eye*>(enemy))
+			eye->idleAnimation();
     }
 }
 

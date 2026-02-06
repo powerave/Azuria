@@ -3,9 +3,10 @@ NAME        = game
 
 # Compilateur et drapeaux
 CC          = g++
-CXXFLAGS    = -std=c++17 -Wall -Wextra -g -Isrc
+SFML_DIR    = SFML-2.6.1
+CXXFLAGS    = -std=c++17 -Wall -Wextra -g -Isrc -I$(SFML_DIR)/include
 # Bibliothèques SFML
-LDFLAGS     = -lsfml-graphics -lsfml-window -lsfml-system
+LDFLAGS     = -L$(SFML_DIR)/lib -lsfml-graphics -lsfml-window -lsfml-system -Wl,-rpath,$(SFML_DIR)/lib
 
 # Récupération automatique des sources
 # Prend main.cpp ET tous les .cpp dans src/ et ses sous-dossiers

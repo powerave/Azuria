@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include "../Hero.hpp"
 #include "../Entities/Goblin.hpp"
+#include "../Entities/Skeleton.hpp"
+#include "../Entities/Eye.hpp"
 #include "Entities/Enemy.hpp"
 
 class Game {
@@ -28,7 +30,7 @@ class Game {
         void updateEnemies();
         void handleCombat();
         void removeDeadEnemies();
-        void spawnEnemies(int x, int y);
+        void spawnEnemies(float x, float y);
         void randomSpawnEnemies();
     
     public:
