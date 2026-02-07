@@ -6,6 +6,9 @@ void Game::processEvents() {
     while(_window.pollEvent(event)) {
         if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) 
             _window.close();
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+            handleAttack(); // Appelle l'attaque une seule fois par clic
+}
     }
 }
 
@@ -91,21 +94,18 @@ void Game::updateProjectiles() {
 
 void Game::handleAttack() {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (_atkClock.getElapsedTime().asSeconds() < 1.0f)
+            return;
         Weapon *leftWeapon = _Player->getLeftWeapon();
         Weapon *rightWeapon = _Player->getRightWeapon();
         if (!rightWeapon && !leftWeapon)
             return;
         float range;
-        float atkSpeed;
         if (rightWeapon) {
             range = rightWeapon->getRange();
-            atkSpeed = rightWeapon->getAs();
         } else {
             range = leftWeapon->getRange();
-            atkSpeed = leftWeapon->getAs();
         }
-        if (_atkClock.getElapsedTime().asSeconds() < atkSpeed)
-            return;
         sf::Vector2i mousePixel = sf::Mouse::getPosition(_window);
         sf::Vector2f mousePos(static_cast<float>(mousePixel.x), static_cast<float>(mousePixel.y));
         sf::Vector2f heroPos = _playerSprite.getPosition();
@@ -114,7 +114,7 @@ void Game::handleAttack() {
         if (length > 0) {
             direction /= length; // vitesse fixe de projectile quelle que soit la distance
 
-            Arrow *arrow = new Arrow(2.0f, heroPos.x, heroPos.y, mousePos.x, mousePos.y, range);
+            Arrow *arrow = new Arrow(500.0f, heroPos.x, heroPos.y, mousePos.x, mousePos.y, range);
             _projectiles.push_back(arrow);
         }
     }
@@ -141,7 +141,7 @@ void Game::update() {
 
     if (_enemies.empty())
         randomSpawnEnemies();
-    handleAttack();
+
     handleCombat();
     updateProjectiles();
     updateEnemies();

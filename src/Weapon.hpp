@@ -12,7 +12,7 @@ class Weapon  {
         const std::string _type;
         int _dmg = 0;
         //int _dmg_type = -1;
-        float _range = 0;
+        float _range = 500.0f;
         float _atk_speed = 1.0f;
         int _hands; // 1 ou 2
     

@@ -3,7 +3,7 @@
 #include "../../../Entities/Enemy.hpp"
 
 Projectile::Projectile(float speed, float startX, float startY, float targetX, float targetY, float range) 
-	: _speed(speed), _x(startX), _y(startY), _targetX(targetX), _targetY(targetY) {
+	: _speed(speed), _x(startX), _y(startY), _startX(startX), _startY(startY), _targetX(targetX), _targetY(targetY), _range(range) {
 		float dirX = targetX - startX;
 		float dirY = targetY - startY;
 		float length = std::sqrt(dirX * dirX + dirY * dirY);
@@ -18,7 +18,7 @@ Projectile::Projectile(float speed, float startX, float startY, float targetX, f
 
 Projectile::~Projectile() {}
 
-Projectile::Projectile(const Projectile &other) : _speed(other._speed), _x(other._x), _y(other._y), _dirX(other._dirX), _dirY(other._dirY), _targetX(other._targetX), _targetY(other._targetY) {}
+Projectile::Projectile(const Projectile &other) : _speed(other._speed), _x(other._x), _y(other._y), _dirX(other._dirX), _dirY(other._dirY), _targetX(other._targetX), _targetY(other._targetY), _range(other._range) {}
 
 float Projectile::getSpeed() const {
 	return _speed;
@@ -58,17 +58,9 @@ void Projectile::setTarget(float targetX, float targetY) {
 }
 
 void Projectile::update(float deltaTime) {
-/*	float dx = _targetX - _x;
-	float dy = _targetY - _y;
-	float distance = std::sqrt(dx * dx + dy * dy);
-
-	if (distance > 0) {
-		dx /= distance;
-		dy /= distance;
-*/		_x = _dirX * _speed * deltaTime;
-		_y = _dirY * _speed * deltaTime;
-		_projectileSprite.setPosition(_x, _y);
-//	}
+	_x += _dirX * _speed * deltaTime;
+	_y += _dirY * _speed * deltaTime;
+	_projectileSprite.setPosition(_x, _y);
 }
 
 bool Projectile::exceedRange() const {
@@ -84,7 +76,7 @@ bool Projectile::hasReachTarget(Enemy &target, Hero &hero) const {
 	float dy = targetPos.y - _y;
 	float distanceSquared = dx * dx + dy * dy;
 
-	float thresholdSquared = 5.0f * 5.0f;
+	float thresholdSquared = 30.0f * 30.0f;
 	int leftDmg, rightDmg;
 
 	if (hero.getLeftWeapon()) {
@@ -97,12 +89,14 @@ bool Projectile::hasReachTarget(Enemy &target, Hero &hero) const {
 	} else {
 		rightDmg = 0;
 	}
-	int dmg = leftDmg + rightDmg;
-  	target.setHp(target.getHp() - (dmg));
-  	std::cout << target.getName() << " has taken " << dmg << " damage!" << std::endl;
+	if (distanceSquared < thresholdSquared) {
+		int dmg = leftDmg + rightDmg;
+	  	target.setHp(target.getHp() - (dmg));
+	  	std::cout << target.getName() << " has taken " << dmg << " damage!" << std::endl;
     
-	if (target.getHp() <= 0)
-        std::cout << target.getName() << " has died!" << std::endl;
-
-	return distanceSquared < thresholdSquared;
+		if (target.getHp() <= 0)
+	        std::cout << target.getName() << " has died!" << std::endl;
+		return true;
+	}
+	return false;
 }
