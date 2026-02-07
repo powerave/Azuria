@@ -8,11 +8,9 @@ class Skeleton :public Enemy {
 		std::string _type = "skeleton";
 		sf::IntRect _rectSkeleton;
 		sf::Clock _animClock;
-		float _x;
-		float _y;
 	
 	public:
-		Skeleton(std::string name, std::string primaryWeapon, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp, float x, float y);
+		Skeleton(std::string name, std::string primaryWeapon, float x, float y, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp);
 		~Skeleton();
 		Skeleton(const Skeleton &other);
 

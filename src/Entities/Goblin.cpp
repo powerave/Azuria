@@ -1,7 +1,7 @@
 #include "Goblin.hpp"
 
-Goblin::Goblin(std::string name, std::string primaryWeapon, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp, float x, float y) 
-    : Enemy(name, primaryWeapon, dmg, as, range, hp, mana, ms, crit, lvl, exp) {
+Goblin::Goblin(std::string name, std::string primaryWeapon, float x, float y, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp) 
+    : Enemy(name, primaryWeapon, x, y, dmg, as, range, hp, mana, ms, crit, lvl, exp) {
         _x = x;
         _y = y;
         if (!_enemyTexture.loadFromFile("src/Sprites/Monsters_Creatures_Fantasy/Goblin/Idle.png")) {
@@ -13,6 +13,7 @@ Goblin::Goblin(std::string name, std::string primaryWeapon, int dmg, float as, f
         _rectGoblin = sf::IntRect(0, 0, 60, 150);
         _enemySprite.setTextureRect(_rectGoblin);
         _enemySprite.setPosition(x, y);
+        _hitbox = sf::FloatRect(x, y, 30, 50);
 }
 
 Goblin::Goblin(const Goblin &other) : Enemy(other) {}

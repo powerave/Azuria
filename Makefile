@@ -4,7 +4,7 @@ NAME        = game
 # Compilateur et drapeaux
 CC          = g++
 SFML_DIR    = SFML-2.6.1
-CXXFLAGS    = -std=c++17 -Wall -Wextra -g -Isrc -I$(SFML_DIR)/include
+CXXFLAGS    = -std=c++17 -Wall -Wextra -g -v -D_GLIBCXX_USE_CXX11_ABI=1 -Isrc -I$(SFML_DIR)/include
 # Bibliothèques SFML
 LDFLAGS     = -L$(SFML_DIR)/lib -lsfml-graphics -lsfml-window -lsfml-system -Wl,-rpath,$(SFML_DIR)/lib
 

@@ -1,7 +1,7 @@
 #include "Eye.hpp"
 
-Eye::Eye(std::string name, std::string primaryWeapon, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp, float x, float y)
-	: Enemy(name, primaryWeapon, dmg, as, range, hp, mana, ms, crit, lvl, exp), _type("eye"), _x(x), _y(y) {
+Eye::Eye(std::string name, std::string primaryWeapon, float x, float y, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp)
+	: Enemy(name, primaryWeapon, x, y, dmg, as, range, hp, mana, ms, crit, lvl, exp), _type("eye") {
 	if (!_enemyTexture.loadFromFile("src/Sprites/Monsters_Creatures_Fantasy/Flying eye/Flight.png")) {
 		std::cout << "Error: failed to load Eye texture" << std::endl;
 	} else {
@@ -11,6 +11,7 @@ Eye::Eye(std::string name, std::string primaryWeapon, int dmg, float as, float r
 	_rectEye = sf::IntRect(0, 0, 60, 150);
 	_enemySprite.setTextureRect(_rectEye);
 	_enemySprite.setPosition(x, y);
+	_hitbox = sf::FloatRect(x, y, 40, 60);
 }
 
 Eye::Eye(const Eye &other) : Enemy(other) {}

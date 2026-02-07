@@ -17,11 +17,12 @@ class Enemy {
         float _crit = 5.0f;
         int _lvl;
         int _exp;
+        sf::FloatRect _hitbox;
         sf::Texture _enemyTexture;
         sf::Sprite _enemySprite;
     
     public:
-        Enemy(std::string name, std::string primaryWeapon, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp);
+        Enemy(std::string name, std::string primaryWeapon, float x, float y, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp);
         virtual ~Enemy();
         Enemy(const Enemy& other);
 
@@ -37,6 +38,7 @@ class Enemy {
         float getMspeed() const;
         float getCrit() const;
         int getExp() const;
+        sf::FloatRect getHitbox() const;
 
         void setX(const float x);
         void setY(const float y);

@@ -8,11 +8,9 @@ class Eye : public Enemy {
 		std::string _type = "eye";
 		sf::IntRect _rectEye;
 		sf::Clock _animClock;
-		float _x;
-		float _y;
 
 	public:
-		Eye(std::string name, std::string primaryWeapon, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp, float x, float y);
+		Eye(std::string name, std::string primaryWeapon, float x, float y, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp);
 		~Eye();
 		Eye(const Eye &other);
 

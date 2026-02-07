@@ -6,7 +6,7 @@ Arrow::Arrow(float speed, float startX, float startY, float targetX, float targe
 			std::cout << "Error: failed to load arrow.png" << std::endl;
 		_projectileSprite.setTexture(_projectileTexture);
 		_projectileSprite.setTextureRect(sf::IntRect(0, 0, 100, 20));
-		_projectileSprite.setOrigin(50.F, 10.f);
+		_projectileSprite.setOrigin(10.F, 10.f);
 		_projectileSprite.setPosition(_x, _y);
 		std::cout << "Arrow" << std::endl;
 	}

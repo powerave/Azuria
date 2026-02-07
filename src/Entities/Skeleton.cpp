@@ -1,7 +1,7 @@
 #include "Skeleton.hpp"
 
-Skeleton::Skeleton(std::string name, std::string primaryWeapon, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp, float x, float y)
-	: Enemy(name, primaryWeapon, dmg, as, range, hp, mana, ms, crit, lvl, exp), _type("Skeleton"), _x(x), _y(y) {
+Skeleton::Skeleton(std::string name, std::string primaryWeapon, float x, float y, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp)
+	: Enemy(name, primaryWeapon, x, y, dmg, as, range, hp, mana, ms, crit, lvl, exp), _type("Skeleton") {
 	if (!_enemyTexture.loadFromFile("src/Sprites/Monsters_Creatures_Fantasy/Skeleton/Idle.png")) {
 		std::cout << "Error: failed to load Skeleton texture" << std::endl;
 	} else {
@@ -11,6 +11,7 @@ Skeleton::Skeleton(std::string name, std::string primaryWeapon, int dmg, float a
 	_rectSkeleton = sf::IntRect(0, 0, 60, 150);
 	_enemySprite.setTextureRect(_rectSkeleton);
 	_enemySprite.setPosition(x, y);
+	_hitbox = sf::FloatRect(x, y, 40, 60);
 }
 
 Skeleton::Skeleton(const Skeleton &other) : Enemy(other) {}

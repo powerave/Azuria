@@ -14,6 +14,10 @@ Projectile::Projectile(float speed, float startX, float startY, float targetX, f
 			_dirX = 0;
 			_dirY = 0;
 		}
+		float angle = std::atan2(_dirY, _dirX) * 180 / 3.14159265f;
+		sf::FloatRect bounds = _projectileSprite.getLocalBounds();
+		_projectileSprite.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
+		_projectileSprite.setRotation(angle);
 	}
 
 Projectile::~Projectile() {}
@@ -71,12 +75,7 @@ bool Projectile::exceedRange() const {
 }
 
 bool Projectile::hasReachTarget(Enemy &target, Hero &hero) const {
-	sf::Vector2f targetPos(target.getX(), target.getY());
-	float dx = targetPos.x - _x;
-	float dy = targetPos.y - _y;
-	float distanceSquared = dx * dx + dy * dy;
-
-	float thresholdSquared = 30.0f * 30.0f;
+	float thresholdSquared = 5.0f * 5.0f;
 	int leftDmg, rightDmg;
 
 	if (hero.getLeftWeapon()) {
@@ -89,7 +88,7 @@ bool Projectile::hasReachTarget(Enemy &target, Hero &hero) const {
 	} else {
 		rightDmg = 0;
 	}
-	if (distanceSquared < thresholdSquared) {
+	if (target.getHitbox().contains(_x, _y)) {
 		int dmg = leftDmg + rightDmg;
 	  	target.setHp(target.getHp() - (dmg));
 	  	std::cout << target.getName() << " has taken " << dmg << " damage!" << std::endl;

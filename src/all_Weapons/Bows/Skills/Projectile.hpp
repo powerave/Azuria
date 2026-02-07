@@ -18,6 +18,7 @@ class Projectile {
 		float _range;
 		sf::Texture _projectileTexture;
 		sf::Sprite _projectileSprite;
+		float angle;
 
 	public:
 		Projectile(float speed, float startX, float startY, float targetX, float targetY, float range);
@@ -32,7 +33,7 @@ class Projectile {
 		void setX(const float x);
 		void setY(const float y);
 		void setTarget(float targetX, float targetY);
-
+		
 		void update(float deltaTime);
 		bool hasReachTarget(Enemy &target, Hero &hero) const;
 		bool exceedRange() const;

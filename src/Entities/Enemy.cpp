@@ -1,11 +1,11 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy( std::string name, std::string primaryWeapon, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp)
-    : _name(name), _primaryWeapon(primaryWeapon), _dmg(dmg), _atkSpeed(as), _range(range), _hp(hp), _mana(mana), _lvl(lvl), _exp(exp) {}
+Enemy::Enemy( std::string name, std::string primaryWeapon, float x, float y, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp)
+    : _name(name), _primaryWeapon(primaryWeapon), _x(x), _y(y), _dmg(dmg), _atkSpeed(as), _range(range), _hp(hp), _mana(mana), _lvl(lvl), _exp(exp) {}
 
 Enemy::~Enemy() {}
 
-Enemy::Enemy(const Enemy &other) : _name(other._name), _primaryWeapon(other._primaryWeapon), _dmg(other._dmg), _atkSpeed(other._atkSpeed), _range(other._range), _hp(other._hp), _mana(other._mana), _lvl(other._lvl), _exp(other._exp) {}
+Enemy::Enemy(const Enemy &other) : _name(other._name), _primaryWeapon(other._primaryWeapon), _x(other._x), _y(other._y), _dmg(other._dmg), _atkSpeed(other._atkSpeed), _range(other._range), _hp(other._hp), _mana(other._mana), _lvl(other._lvl), _exp(other._exp) {}
 
 std::string Enemy::getName() const {
     return _name;
@@ -59,12 +59,18 @@ sf::Sprite& Enemy::getSprite() {
     return _enemySprite;
 }
 
+sf::FloatRect Enemy::getHitbox() const {
+    return _hitbox;
+}
+
 void Enemy::setX(const float x) {
     _x = x;
+    _hitbox.left = x;
 }
 
 void Enemy::setY(const float y) {
     _y = y;
+    _hitbox.top = y;
 }
 
 void Enemy::setHp(const int hp) {

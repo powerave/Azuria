@@ -45,9 +45,9 @@ bool Game::handleMovements(bool isMoving) {
 }
 
 void Game::spawnEnemies(float x, float y) {
-    _enemies.push_back(new Goblin("Goblin", "Stick", 3, 1.0f, 2.0f, 12, 5, 2.0f, 5.0f, 1, 5, x, y));
-	_enemies.push_back(new Skeleton("Skeleton", "Bone Club", 5, 1.5f, 2.5f, 20, 10, 1.5f, 10.0f, 2, 10, x + 100.0f, y + 100.0f));
-	_enemies.push_back(new Eye("Eye", "Bite", 4, 1.2f, 3.0f, 15, 20, 2.5f, 7.5f, 1, 8, x - 100.0f, y - 100.0f));
+    _enemies.push_back(new Goblin("Goblin", "Stick", x, y, 3, 1.0f, 2.0f, 12, 5, 2.0f, 5.0f, 1, 5));
+	_enemies.push_back(new Skeleton("Skeleton", "Bone Club",  x + 100.0f, y + 100.0f, 5, 1.5f, 2.5f, 20, 10, 1.5f, 10.0f, 2, 10));
+	_enemies.push_back(new Eye("Eye", "Bite", x - 100.0f, y - 100.0f, 4, 1.2f, 3.0f, 15, 20, 2.5f, 7.5f, 1, 8));
 }
 
 void Game::randomSpawnEnemies() {
