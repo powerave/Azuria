@@ -7,7 +7,7 @@
 class Sword : public Weapon {
     public:
         Sword(std::string name, std::string type, int dmg, float range, int as, int hands);
-        void attack(Enemy &target) override;
+        void attack(Enemy &target, Hero &hero) override;
         ~Sword() override;
         Weapon* clone() const override;
 };

@@ -15,6 +15,14 @@ std::string Enemy::getWeaponName() const {
     return _primaryWeapon;
 }
 
+float Enemy::getX() const {
+    return _x;
+}
+
+float Enemy::getY() const {
+    return _y;
+}
+
 int Enemy::getDmg() const {
     return _dmg;
 }
@@ -49,6 +57,14 @@ int Enemy::getExp() const {
 
 sf::Sprite& Enemy::getSprite() {
     return _enemySprite;
+}
+
+void Enemy::setX(const float x) {
+    _x = x;
+}
+
+void Enemy::setY(const float y) {
+    _y = y;
 }
 
 void Enemy::setHp(const int hp) {

@@ -13,7 +13,7 @@ class Weapon  {
         int _dmg = 0;
         //int _dmg_type = -1;
         float _range = 0;
-        int _atk_speed = 0;
+        float _atk_speed = 1.0f;
         int _hands; // 1 ou 2
     
     public:
@@ -30,6 +30,6 @@ class Weapon  {
         void setRange(const float range);
         void setAs(const int as);
 
-        virtual void attack(Enemy &target) = 0;
+        virtual void attack(Enemy &target, Hero &hero) = 0;
         virtual Weapon* clone() const = 0;
 };

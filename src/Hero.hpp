@@ -9,6 +9,8 @@
 class Hero {
     private:
         const std::string _name;
+        float _x;
+        float _y;
         Bag _bag;
         int _hp = 0;
         int _mana = 0;
@@ -34,6 +36,8 @@ class Hero {
         std::string getName() const;
         Bag& getBag();
         int getHp() const;
+        float getX() const;
+        float getY() const;
         int getMana() const;
         int getStr() const;
         int getDex() const;
@@ -42,8 +46,12 @@ class Hero {
         int getExp() const;
         float getMspeed() const;
         std::map<std::string, Gear*> &getEquiped();
+        Weapon* getLeftWeapon();
+        Weapon* getRightWeapon();
         
         void setHp(const int hp);
+        void setX(const float x);
+        void setY(const float y);
         void setMana(const int mana);
         void setStr(const int str);
         void setDex(const int dex);

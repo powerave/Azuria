@@ -27,6 +27,14 @@ Bag& Hero::getBag() {
     return _bag;
 }
 
+float Hero::getX() const {
+    return _x;
+}
+
+float Hero::getY() const {
+    return _y;
+}
+
 int Hero::getHp() const {
     return _hp;
 }
@@ -63,8 +71,28 @@ std::map<std::string, Gear*> &Hero::getEquiped() {
     return _equiped;
 }
 
+Weapon* Hero::getLeftWeapon() {
+    if (_W_equiped["left"])
+        return _W_equiped["left"];
+    return nullptr;
+}
+
+Weapon* Hero::getRightWeapon() {
+    if (_W_equiped["right"])
+        return _W_equiped["right"];
+    return nullptr;
+}
+
 void Hero::setHp(const int hp) {
     this->_hp = hp;
+}
+
+void Hero::setX(const float x) {
+    _x = x;
+}
+
+void Hero::setY(const float y) {
+    _y = y;
 }
 
 void Hero::setMana(const int mana) {

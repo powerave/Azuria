@@ -1,14 +1,16 @@
 #include "Bow.hpp"
 #include "../../Hero.hpp"
 #include "../../Entities/Enemy.hpp"
+#include <cmath>
 
 Bow::Bow(std::string name, std::string type, int dmg, float range, int as, int hands) : Weapon(name, type, dmg, range, as, hands) {}
 
-void Bow::attack(Enemy &target) {
-    target.setHp(target.getHp() - this->_dmg);
-    std::cout << target.getName() << " has taken " << this->_dmg << " damage!" << std::endl;
-    if (target.getHp() <= 0)
-        std::cout << target.getName() << " has died!" << std::endl;
+void Bow::attack(Enemy &target, Hero &hero) {
+    sf::Vector2f heroPos = sf::Vector2f(hero.getX(), hero.getY());
+    sf::Vector2f enemyPos = sf::Vector2f(target.getX(), target.getY());
+    float distance = std::sqrt(std::pow(enemyPos.x - heroPos.y, 2) + std::pow(enemyPos.y - heroPos.y, 2));
+    
+    
 }
 
 Bow::~Bow() {}

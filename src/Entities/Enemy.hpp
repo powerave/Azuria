@@ -6,6 +6,8 @@ class Enemy {
     protected:
         const std::string _name;
         const std::string _primaryWeapon;
+        float _x;
+        float _y;
         int _dmg;
         float _atkSpeed;
         float _range;
@@ -25,6 +27,8 @@ class Enemy {
 
         std::string getName() const;
         std::string getWeaponName() const;
+        float getX() const;
+        float getY() const;
         int getDmg() const;
         float getAtkSpeed() const;
         float getRange() const;
@@ -34,6 +38,8 @@ class Enemy {
         float getCrit() const;
         int getExp() const;
 
+        void setX(const float x);
+        void setY(const float y);
         void setHp(const int hp);
         void setMana(const int mana);
         void setMspeed(const float speed);

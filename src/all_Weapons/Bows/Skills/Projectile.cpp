@@ -1,9 +1,8 @@
-#pragma once
-
 #include "Projectile.hpp"
 #include <cmath>
+#include "../../../Entities/Enemy.hpp"
 
-Projectile::Projectile(float speed, float startX, float startY, float targetX, float targetY) 
+Projectile::Projectile(float speed, float startX, float startY, float targetX, float targetY, float range) 
 	: _speed(speed), _x(startX), _y(startY), _targetX(targetX), _targetY(targetY) {
 		float dirX = targetX - startX;
 		float dirY = targetY - startY;
@@ -33,6 +32,10 @@ float Projectile::getY() const {
 	return _y;
 }
 
+sf::Sprite& Projectile::getSprite() {
+	return _projectileSprite;
+}
+
 void Projectile::setX(const float x) {
 	_x = x;
 }
@@ -55,15 +58,51 @@ void Projectile::setTarget(float targetX, float targetY) {
 }
 
 void Projectile::update(float deltaTime) {
-	_x = _dirX * _speed * deltaTime;
-	_y = _dirY * _speed * deltaTime;
+/*	float dx = _targetX - _x;
+	float dy = _targetY - _y;
+	float distance = std::sqrt(dx * dx + dy * dy);
+
+	if (distance > 0) {
+		dx /= distance;
+		dy /= distance;
+*/		_x = _dirX * _speed * deltaTime;
+		_y = _dirY * _speed * deltaTime;
+		_projectileSprite.setPosition(_x, _y);
+//	}
 }
 
-bool Projectile::hasReachTarget() const {
-	float dx = _targetX - _x;
-	float dy = _targetY - _y;
+bool Projectile::exceedRange() const {
+	float dx = _x - _startX;
+	float dy = _y - _startY;
+	float distanceTraveled = std::sqrt(dx * dx + dy * dy);
+	return distanceTraveled >= _range;
+}
+
+bool Projectile::hasReachTarget(Enemy &target, Hero &hero) const {
+	sf::Vector2f targetPos(target.getX(), target.getY());
+	float dx = targetPos.x - _x;
+	float dy = targetPos.y - _y;
 	float distanceSquared = dx * dx + dy * dy;
 
 	float thresholdSquared = 5.0f * 5.0f;
+	int leftDmg, rightDmg;
+
+	if (hero.getLeftWeapon()) {
+		leftDmg = hero.getLeftWeapon()->getDmg();
+	} else {
+		leftDmg = 0;
+	}
+	if (hero.getRightWeapon()) {
+		rightDmg = hero.getRightWeapon()->getDmg();
+	} else {
+		rightDmg = 0;
+	}
+	int dmg = leftDmg + rightDmg;
+  	target.setHp(target.getHp() - (dmg));
+  	std::cout << target.getName() << " has taken " << dmg << " damage!" << std::endl;
+    
+	if (target.getHp() <= 0)
+        std::cout << target.getName() << " has died!" << std::endl;
+
 	return distanceSquared < thresholdSquared;
 }

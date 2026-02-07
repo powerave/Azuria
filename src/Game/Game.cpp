@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "all_Weapons/Bows/Bow.hpp"
 
 void Game::processEvents() {
     sf::Event event;
@@ -63,8 +64,64 @@ void Game::updateEnemies() {
     }
 }
 
+void Game::updateProjectiles() {
+    static sf::Clock deltaClock;
+    float deltaTime = deltaClock.restart().asSeconds();
+    for (auto it = _projectiles.begin(); it != _projectiles.end();) {
+        Projectile* proj = *it;
+        proj->update(deltaTime);
+        
+        bool shouldRemove = false;
+        for (Enemy *enemy : _enemies) {
+            if (proj->hasReachTarget(*enemy, *_Player)) {
+                shouldRemove = true;
+                break;
+            }
+        }
+        if (!shouldRemove && proj->exceedRange())
+            shouldRemove = true;
+        if (shouldRemove) {
+            delete proj;
+            it = _projectiles.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
+void Game::handleAttack() {
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        Weapon *leftWeapon = _Player->getLeftWeapon();
+        Weapon *rightWeapon = _Player->getRightWeapon();
+        if (!rightWeapon && !leftWeapon)
+            return;
+        float range;
+        float atkSpeed;
+        if (rightWeapon) {
+            range = rightWeapon->getRange();
+            atkSpeed = rightWeapon->getAs();
+        } else {
+            range = leftWeapon->getRange();
+            atkSpeed = leftWeapon->getAs();
+        }
+        if (_atkClock.getElapsedTime().asSeconds() < atkSpeed)
+            return;
+        sf::Vector2i mousePixel = sf::Mouse::getPosition(_window);
+        sf::Vector2f mousePos(static_cast<float>(mousePixel.x), static_cast<float>(mousePixel.y));
+        sf::Vector2f heroPos = _playerSprite.getPosition();
+        sf::Vector2f direction = mousePos - heroPos;
+        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+        if (length > 0) {
+            direction /= length; // vitesse fixe de projectile quelle que soit la distance
+
+            Arrow *arrow = new Arrow(2.0f, heroPos.x, heroPos.y, mousePos.x, mousePos.y, range);
+            _projectiles.push_back(arrow);
+        }
+    }
+}
+
 void Game::handleCombat() {
-    /*TODO: Pour bow: creer projectile, si projectile touche on applique dmg*/
+    
 }
 
 void Game::removeDeadEnemies() {
@@ -80,11 +137,14 @@ void Game::removeDeadEnemies() {
 
 void Game::update() {
     bool isMoving = false;
+    sf::Vector2i mousePos = sf::Mouse::getPosition(_window);
 
     if (_enemies.empty())
         randomSpawnEnemies();
-    updateEnemies();
+    handleAttack();
     handleCombat();
+    updateProjectiles();
+    updateEnemies();
     removeDeadEnemies();
     isMoving = handleMovements(isMoving);
     if (isMoving) {
@@ -105,10 +165,13 @@ void Game::update() {
 }
 
 void Game::render() {
-    _window.clear(sf::Color::Black);
+    sf::Color kaki(60, 80, 40);
+    _window.clear(kaki);
     _window.draw(_playerSprite);
     for (Enemy* enemy : _enemies)
         _window.draw(enemy->getSprite());
+    for (Projectile *projectile : _projectiles)
+        _window.draw(projectile->getSprite());
     _window.display();
 }
 
@@ -123,6 +186,8 @@ Game::Game() {
 
     _Player = new Hero("Sylvana", AdvanturerBag, 50, 16, 13, 18, Gears, Weapons);
 
+    Bow* startingBow = new Bow("Shortbow", "Bow", 10, 500.0f, 2, 2);
+    _Player->equipTwoHands(startingBow);
     if (!_playerTexture.loadFromFile("src/Sprites/Arcane archer/spritesheet.png")) {
         std::cout << "ERREUR: Impossible de charger l'image du heros !" << std::endl;
         // Fallback: carré vert si image pas trouvée

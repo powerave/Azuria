@@ -31,7 +31,7 @@ void Eye::attack(Hero hero) {
 }
 
 void Eye::idleAnimation() {
-	if (_animClock.getElapsedTime().asSeconds() > 0.15f) {
+	if (_animClock.getElapsedTime().asSeconds() > 0.07f) {
 		int frameCount = 4;
 		int spriteWidth = 150;
 		int spriteHeight = 150;
