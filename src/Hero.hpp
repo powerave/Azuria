@@ -17,7 +17,7 @@ class Hero {
         int _str = 0;
         int _int = 0;
         int _dex = 0;
-        float _moveSpeed = 2.5f;
+        float _moveSpeed = 1.5f;
         float _crit = 5.0f;
         int _lvl = 1;
         int _exp = 0;

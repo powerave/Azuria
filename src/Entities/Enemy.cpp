@@ -63,6 +63,11 @@ sf::FloatRect Enemy::getHitbox() const {
     return _hitbox;
 }
 
+void Enemy::updateHitbox() {
+    _hitbox.left = _enemySprite.getPosition().x + _hitboxOffset.x;
+    _hitbox.top = _enemySprite.getPosition().y + _hitboxOffset.y;
+}
+
 void Enemy::setX(const float x) {
     _x = x;
     _hitbox.left = x;

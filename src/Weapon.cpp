@@ -4,7 +4,7 @@ Weapon::~Weapon() {
     std::cout << "Dropped this useless sword" << std::endl;
 }
 
-Weapon::Weapon(const std::string &name, const std::string &type, int dmg, float range, int as, int hands) : _name(name), _dmg(dmg), _range(range), _atk_speed(as), _hands(hands) {}
+Weapon::Weapon(const std::string &name, const std::string &type, int dmg, float range, float as, int hands) : _name(name), _dmg(dmg), _range(range), _atk_speed(as), _hands(hands) {}
 
 std::string Weapon::getName() const {
     return _name;
@@ -22,7 +22,7 @@ float Weapon::getRange() const {
     return _range;
 }
 
-int Weapon::getAs() const {
+float Weapon::getAs() const {
     return _atk_speed;
 }
 
@@ -38,6 +38,6 @@ void Weapon::setRange(const float range) {
     this->_range = range;
 }
 
-void Weapon::setAs(const int atk_speed) {
+void Weapon::setAs(const float atk_speed) {
     this->_atk_speed = atk_speed;
 }

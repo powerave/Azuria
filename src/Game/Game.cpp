@@ -58,6 +58,7 @@ void Game::randomSpawnEnemies() {
 
 void Game::updateEnemies() {
     for (Enemy* enemy : _enemies) {
+        enemy->updateHitbox();
         if (Goblin *goblin = dynamic_cast<Goblin*>(enemy))
             goblin->idleAnimation();
 		if (Skeleton *skeleton = dynamic_cast<Skeleton*>(enemy))
@@ -94,12 +95,24 @@ void Game::updateProjectiles() {
 
 void Game::handleAttack() {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        if (_atkClock.getElapsedTime().asSeconds() < 1.0f)
-            return;
         Weapon *leftWeapon = _Player->getLeftWeapon();
         Weapon *rightWeapon = _Player->getRightWeapon();
         if (!rightWeapon && !leftWeapon)
             return;
+        if (leftWeapon && !rightWeapon) {
+            if (leftWeapon->getHands() == 2) {
+                if (_atkClock.getElapsedTime().asSeconds() < leftWeapon->getAs())
+                    return;
+            }
+            else if (_atkClock.getElapsedTime().asSeconds() < leftWeapon->getAs())
+                return;
+        }
+        if (rightWeapon && !leftWeapon)
+            if (_atkClock.getElapsedTime().asSeconds() < rightWeapon->getAs())   
+                return;
+        if (leftWeapon && rightWeapon)
+            if (_atkClock.getElapsedTime().asSeconds() < ((rightWeapon->getAs() + leftWeapon->getAs()) / 2))
+                return;
         float range;
         if (rightWeapon) {
             range = rightWeapon->getRange();
@@ -114,8 +127,9 @@ void Game::handleAttack() {
         if (length > 0) {
             direction /= length; // vitesse fixe de projectile quelle que soit la distance
 
-            Arrow *arrow = new Arrow(500.0f, heroPos.x, heroPos.y, mousePos.x, mousePos.y, range);
+            Arrow *arrow = new Arrow(1250.0f, heroPos.x, heroPos.y, mousePos.x, mousePos.y, range);
             _projectiles.push_back(arrow);
+            _atkClock.restart();
         }
     }
 }
@@ -186,12 +200,10 @@ Game::Game() {
 
     _Player = new Hero("Sylvana", AdvanturerBag, 50, 16, 13, 18, Gears, Weapons);
 
-    Bow* startingBow = new Bow("Shortbow", "Bow", 10, 500.0f, 2, 2);
+    Bow* startingBow = new Bow("Shortbow", "Bow", 10, 850.0f, 0.66f, 2);
     _Player->equipTwoHands(startingBow);
     if (!_playerTexture.loadFromFile("src/Sprites/Arcane archer/spritesheet.png")) {
         std::cout << "ERREUR: Impossible de charger l'image du heros !" << std::endl;
-        // Fallback: carré vert si image pas trouvée
-        // Mais pour l'instant on garde le sprite vide ou on verra
     }
     _playerSprite.setTexture(_playerTexture);
     _playerSprite.setOrigin(32, 32);

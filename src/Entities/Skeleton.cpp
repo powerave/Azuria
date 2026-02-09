@@ -7,11 +7,12 @@ Skeleton::Skeleton(std::string name, std::string primaryWeapon, float x, float y
 	} else {
 		std::cout << "Skeleton texture loaded successfully" << std::endl;
 	}
+	_hitboxOffset = {60.f, 50.f};
 	_enemySprite.setTexture(_enemyTexture);
 	_rectSkeleton = sf::IntRect(0, 0, 60, 150);
 	_enemySprite.setTextureRect(_rectSkeleton);
 	_enemySprite.setPosition(x, y);
-	_hitbox = sf::FloatRect(x, y, 40, 60);
+	_hitbox = sf::FloatRect(x, y, 50, 70);
 }
 
 Skeleton::Skeleton(const Skeleton &other) : Enemy(other) {}

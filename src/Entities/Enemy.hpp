@@ -18,6 +18,7 @@ class Enemy {
         int _lvl;
         int _exp;
         sf::FloatRect _hitbox;
+        sf::Vector2f _hitboxOffset;
         sf::Texture _enemyTexture;
         sf::Sprite _enemySprite;
     
@@ -46,6 +47,7 @@ class Enemy {
         void setMana(const int mana);
         void setMspeed(const float speed);
         void setCrit(const float crit);
+        void updateHitbox();
 
         virtual Enemy* clone() const = 0;
         virtual sf::Sprite &getSprite();

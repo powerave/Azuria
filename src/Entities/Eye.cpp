@@ -7,11 +7,12 @@ Eye::Eye(std::string name, std::string primaryWeapon, float x, float y, int dmg,
 	} else {
 		std::cout << "Eye texture loaded successfully" << std::endl;
 	}
+	_hitboxOffset = {60.f, 50.f};
 	_enemySprite.setTexture(_enemyTexture);
-	_rectEye = sf::IntRect(0, 0, 60, 150);
+	_rectEye = sf::IntRect(0, 0, 150, 150);
 	_enemySprite.setTextureRect(_rectEye);
 	_enemySprite.setPosition(x, y);
-	_hitbox = sf::FloatRect(x, y, 40, 60);
+	_hitbox = sf::FloatRect(x, y, 50, 50);
 }
 
 Eye::Eye(const Eye &other) : Enemy(other) {}

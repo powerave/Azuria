@@ -33,6 +33,7 @@ class Projectile {
 		void setX(const float x);
 		void setY(const float y);
 		void setTarget(float targetX, float targetY);
+		sf::Vector2f getTipPosition() const;
 		
 		void update(float deltaTime);
 		bool hasReachTarget(Enemy &target, Hero &hero) const;

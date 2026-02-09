@@ -36,6 +36,16 @@ float Projectile::getY() const {
 	return _y;
 }
 
+sf::Vector2f Projectile::getTipPosition() const {
+	float angleRad = _projectileSprite.getRotation() * 3.14159265f / 180.f;
+	float dist = _projectileSprite.getLocalBounds().width / 2.0f;
+
+	return {
+		_projectileSprite.getPosition().x + std::cos(angleRad) * dist,
+		_projectileSprite.getPosition().y + std::sin(angleRad) * dist
+	};
+}
+
 sf::Sprite& Projectile::getSprite() {
 	return _projectileSprite;
 }
