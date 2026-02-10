@@ -29,7 +29,7 @@ class Game {
         void processEvents();
         void update(); //Maj de la logique (physique, stats)
         void render();
-        bool handleMovements(bool isMoving);
+        void handleMovements();
 
         void updateEnemies();
         void updateProjectiles();
@@ -38,6 +38,7 @@ class Game {
         void removeDeadEnemies();
         void spawnEnemies(float x, float y);
         void randomSpawnEnemies();
+        void handlePlayerAttackAnimation();
     
     public:
         Game();

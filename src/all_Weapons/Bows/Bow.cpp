@@ -1,6 +1,6 @@
-#include "Bow.hpp"
-#include "../../Hero.hpp"
-#include "../../Entities/Enemy.hpp"
+#include "../../../Includes/all_Weapons/Bows/Bow.hpp"
+#include "../../../Includes/Hero.hpp"
+#include "../../../Includes/Entities/Enemy.hpp"
 #include <cmath>
 
 Bow::Bow(std::string name, std::string type, int dmg, float range, float as, int hands) : Weapon(name, type, dmg, range, as, hands) {}

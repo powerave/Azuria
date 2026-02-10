@@ -23,6 +23,8 @@ class Hero {
         int _exp = 0;
         bool _leftHand = false; // false = empty
         bool _rightHand = false;
+        bool _isAttacking = false;
+        bool _isMoving = false;
         std::map<int, int> _levels;
         std::map<std::string, Gear*> _equiped;
         std::map<std::string, Weapon*> _W_equiped;
@@ -45,6 +47,8 @@ class Hero {
         int getLvl() const;
         int getExp() const;
         float getMspeed() const;
+        bool getAtkStatus() const;
+        bool getMovingStatus() const;
         std::map<std::string, Gear*> &getEquiped();
         Weapon* getLeftWeapon();
         Weapon* getRightWeapon();
@@ -60,6 +64,8 @@ class Hero {
         void setExp(const int exp);
         void setBag(const Bag& bag);
         void setMspeed(const float Mspeed);
+        void setAtkStatus(const bool isAttacking);
+        void setMovingStatus(const bool isMoving);
         
         void equipGear(Gear* newGear);
         void equipLeftHand(Weapon* newWeapon);

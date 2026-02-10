@@ -1,4 +1,4 @@
-#include "Weapon.hpp"
+#include "../Includes/Weapon.hpp"
 
 Weapon::~Weapon() {
     std::cout << "Dropped this useless sword" << std::endl;

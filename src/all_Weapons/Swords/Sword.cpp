@@ -1,5 +1,5 @@
-#include "Sword.hpp"
-#include "../../Hero.hpp"
+#include "../../../Includes/all_Weapons/Swords/Sword.hpp"
+#include "../../../Includes/Hero.hpp"
 
 Sword::Sword(std::string name, std::string type, int dmg, float range, int as, int hands) : Weapon(name, type, dmg, range, as, hands) {}
 

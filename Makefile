@@ -1,10 +1,13 @@
+# Makefile mis à jour pour le projet Azuria
+# Ajout de vérifications pour les dépendances et clarification des sections
+
 # Nom de l'exécutable
 NAME        = game
 
 # Compilateur et drapeaux
 CC          = g++
 SFML_DIR    = SFML-2.6.1
-CXXFLAGS    = -std=c++17 -Wall -Wextra -g -v -D_GLIBCXX_USE_CXX11_ABI=1 -Isrc -I$(SFML_DIR)/include
+CXXFLAGS    = -std=c++17 -Wall -Wextra -g -v -D_GLIBCXX_USE_CXX11_ABI=1 -Isrc -I$(SFML_DIR)/include -IIncludes
 # Bibliothèques SFML
 LDFLAGS     = -L$(SFML_DIR)/lib -lsfml-graphics -lsfml-window -lsfml-system -Wl,-rpath,$(SFML_DIR)/lib
 
@@ -39,4 +42,11 @@ fclean: clean
 # Recompilation complète
 re: fclean all
 
-.PHONY: all clean fclean re
+# Vérification des dépendances SFML
+check-sfml:
+	@if [ ! -d "$(SFML_DIR)" ]; then \
+		echo "Erreur : Le dossier SFML n'existe pas. Veuillez vérifier le chemin."; \
+		exit 1; \
+	fi
+
+.PHONY: all clean fclean re check-sfml

@@ -1,4 +1,4 @@
-#include "Enemy.hpp"
+#include "../../Includes/Entities/Enemy.hpp"
 
 Enemy::Enemy( std::string name, std::string primaryWeapon, float x, float y, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp)
     : _name(name), _primaryWeapon(primaryWeapon), _x(x), _y(y), _dmg(dmg), _atkSpeed(as), _range(range), _hp(hp), _mana(mana), _lvl(lvl), _exp(exp) {}

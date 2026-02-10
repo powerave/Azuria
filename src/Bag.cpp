@@ -1,6 +1,6 @@
-#include "Bag.hpp"
-#include "Weapon.hpp"
-#include "Gear.hpp"
+#include "../Includes/Bag.hpp"
+#include "../Includes/Weapon.hpp"
+#include "../Includes/Gear.hpp"
 
 Bag::Bag(const std::vector<Weapon*> &all_weapons, const std::vector<Gear*> &all_gears) : _all_weapons(all_weapons), _all_gears(all_gears) {}
 

@@ -1,5 +1,5 @@
-#include "Game.hpp"
-#include "all_Weapons/Bows/Bow.hpp"
+#include "../../Includes/Game/Game.hpp"
+#include "../../Includes/all_Weapons/Bows/Bow.hpp"
 
 void Game::processEvents() {
     sf::Event event;
@@ -8,13 +8,15 @@ void Game::processEvents() {
             _window.close();
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
             handleAttack(); // Appelle l'attaque une seule fois par clic
-}
+        }
     }
 }
 
-bool Game::handleMovements(bool isMoving) {
+void Game::handleMovements() {
     float speed = _Player->getMspeed();
-
+    bool isMoving = false;
+    if (_Player->getAtkStatus())
+        return;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
         _playerSprite.move(0, -speed);
         _rectPlayer.top = 0;
@@ -41,7 +43,9 @@ bool Game::handleMovements(bool isMoving) {
         _rectPlayer.left = 5 * 64;
         isMoving = true;
     }
-    return isMoving;
+    if (isMoving != _Player->getMovingStatus())
+        _animFrame = 0;
+    _Player->setMovingStatus(isMoving);
 }
 
 void Game::spawnEnemies(float x, float y) {
@@ -94,7 +98,7 @@ void Game::updateProjectiles() {
 }
 
 void Game::handleAttack() {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+  //  if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         Weapon *leftWeapon = _Player->getLeftWeapon();
         Weapon *rightWeapon = _Player->getRightWeapon();
         if (!rightWeapon && !leftWeapon)
@@ -126,10 +130,25 @@ void Game::handleAttack() {
         float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
         if (length > 0) {
             direction /= length; // vitesse fixe de projectile quelle que soit la distance
-
             Arrow *arrow = new Arrow(1250.0f, heroPos.x, heroPos.y, mousePos.x, mousePos.y, range);
             _projectiles.push_back(arrow);
+            _Player->setAtkStatus(true);
             _atkClock.restart();
+        }
+   // }
+}
+
+void Game::handlePlayerAttackAnimation() {
+    if (_Player->getAtkStatus()) {
+        if (_atkClock.getElapsedTime().asSeconds() > 0.06f) {
+            _animFrame = (_animFrame + 1) % 7;
+            _rectPlayer.left = _animFrame * 64;
+            _rectPlayer.top = 3 * 64;
+            _playerSprite.setTextureRect(_rectPlayer);
+            _atkClock.restart();
+            if (_animFrame == 6) {
+                _Player->setAtkStatus(false);
+            }
         }
     }
 }
@@ -150,7 +169,6 @@ void Game::removeDeadEnemies() {
 }
 
 void Game::update() {
-    bool isMoving = false;
     sf::Vector2i mousePos = sf::Mouse::getPosition(_window);
 
     if (_enemies.empty())
@@ -160,20 +178,23 @@ void Game::update() {
     updateProjectiles();
     updateEnemies();
     removeDeadEnemies();
-    isMoving = handleMovements(isMoving);
-    if (isMoving) {
+    handleMovements();
+    if (_Player->getAtkStatus())
+        handlePlayerAttackAnimation();
+    else if (_Player->getMovingStatus()) {
         if (_animClock.getElapsedTime().asSeconds() > 0.1f) {
             _animFrame = (_animFrame + 1) % 8;
             _animClock.restart();
         }
+        _rectPlayer.top = 0;
         _rectPlayer.left = _animFrame * 64;
     } else {
         if (_animClock.getElapsedTime().asSeconds() > 0.3f) {
             _animFrame = (_animFrame + 1) % 4;
             _animClock.restart();
         }
-        _rectPlayer.left = _animFrame * 64;
         _rectPlayer.top = 5 * 64;
+        _rectPlayer.left = _animFrame * 64;
     }
     _playerSprite.setTextureRect(_rectPlayer);
 }
@@ -202,7 +223,7 @@ Game::Game() {
 
     Bow* startingBow = new Bow("Shortbow", "Bow", 10, 850.0f, 0.66f, 2);
     _Player->equipTwoHands(startingBow);
-    if (!_playerTexture.loadFromFile("src/Sprites/Arcane archer/spritesheet.png")) {
+    if (!_playerTexture.loadFromFile("Sprites/Arcane archer/spritesheet.png")) {
         std::cout << "ERREUR: Impossible de charger l'image du heros !" << std::endl;
     }
     _playerSprite.setTexture(_playerTexture);

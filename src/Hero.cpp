@@ -1,4 +1,4 @@
-#include "Hero.hpp"
+#include "../Includes/Hero.hpp"
 
 Hero::Hero(std::string name, const Bag &bag, int mana, int str, int intel, int dex,
     const std::map<std::string, Gear*> &equiped, const std::map<std::string, Weapon*> &W_equiped) : _name(name),
@@ -22,6 +22,8 @@ Hero::~Hero() {}
 std::string Hero::getName() const {
     return _name;
 }
+
+// GETTERS
 
 Bag& Hero::getBag() {
     return _bag;
@@ -67,6 +69,14 @@ float Hero::getMspeed() const {
     return _moveSpeed;
 }
 
+bool Hero::getAtkStatus() const {
+    return _isAttacking;
+}
+
+bool Hero::getMovingStatus() const {
+    return _isMoving;
+}
+
 std::map<std::string, Gear*> &Hero::getEquiped() {
     return _equiped;
 }
@@ -82,6 +92,8 @@ Weapon* Hero::getRightWeapon() {
         return _W_equiped["right"];
     return nullptr;
 }
+
+// SETTERS
 
 void Hero::setHp(const int hp) {
     this->_hp = hp;
@@ -126,6 +138,16 @@ void Hero::setBag(const Bag &bag) {
 void Hero::setMspeed(const float Mspeed) {
     this->_moveSpeed = Mspeed;
 }
+
+void Hero::setAtkStatus(const bool isAttacking) {
+    _isAttacking = isAttacking;
+}
+
+void Hero::setMovingStatus(const bool isMoving) {
+    _isMoving = isMoving;
+}
+
+// OTHER METHODS
 
 bool Hero::gearTypeVerif(const Gear &testing) {
     if (testing.getType() != "Armor" && testing.getType() != "Cloak" && testing.getType() != "Gloves" && testing.getType() != "Helmet"

@@ -1,6 +1,6 @@
-#include "Projectile.hpp"
+#include "../../../../Includes/all_Weapons/Bows/Skills/Projectile.hpp"
+#include "../../../../Includes/Entities/Enemy.hpp"
 #include <cmath>
-#include "../../../Entities/Enemy.hpp"
 
 Projectile::Projectile(float speed, float startX, float startY, float targetX, float targetY, float range) 
 	: _speed(speed), _x(startX), _y(startY), _startX(startX), _startY(startY), _targetX(targetX), _targetY(targetY), _range(range) {

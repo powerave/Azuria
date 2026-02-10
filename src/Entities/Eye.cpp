@@ -1,8 +1,8 @@
-#include "Eye.hpp"
+#include "../../Includes/Entities/Eye.hpp"
 
 Eye::Eye(std::string name, std::string primaryWeapon, float x, float y, int dmg, float as, float range, int hp, int mana, float ms, float crit, int lvl, int exp)
 	: Enemy(name, primaryWeapon, x, y, dmg, as, range, hp, mana, ms, crit, lvl, exp), _type("eye") {
-	if (!_enemyTexture.loadFromFile("src/Sprites/Monsters_Creatures_Fantasy/Flying eye/Flight.png")) {
+	if (!_enemyTexture.loadFromFile("Sprites/Monsters_Creatures_Fantasy/Flying eye/Flight.png")) {
 		std::cout << "Error: failed to load Eye texture" << std::endl;
 	} else {
 		std::cout << "Eye texture loaded successfully" << std::endl;
